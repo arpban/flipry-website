@@ -1,5 +1,6 @@
 import FlipbookIframe from './components/FlipbookIframe';
 import { Sparkles, Zap, Maximize2, Server, Cloud, Mouse } from 'lucide-react';
+import Link from 'next/link';
 
 
 export default function Home() {
@@ -13,9 +14,9 @@ export default function Home() {
             </span>
           </div>
           <div>
-            <a href="#demo" className='bg-zinc-900 text-white px-4 py-2 rounded-md'>
+            <Link href="/signup" className='bg-zinc-900 text-white px-4 py-2 rounded-md'>
               Get Started
-            </a>
+            </Link>
           </div>
         </nav>
       </header>
@@ -52,9 +53,9 @@ export default function Home() {
               </div>
 
               <div className="flex items-center justify-start gap-4">
-                <a href="#demo" className="bg-zinc-900 text-white px-8 py-4 rounded-md">
+                <Link href="/signup" className="bg-zinc-900 text-white px-8 py-4 rounded-md">
                   Try it now
-                </a>
+                </Link>
                 <a href="#demo" className="border-zinc-300 text-zinc-900 px-8 py-4 rounded-md bg-zinc-100">
                   View demo
                 </a>
@@ -156,9 +157,9 @@ export default function Home() {
                 <p className="text-zinc-300 mb-6">
                   Experience the difference. Scroll through the demos above.
                 </p>
-                <a href="#" className="bg-white text-zinc-900 hover:bg-zinc-100 px-4 py-2 rounded-md inline-block">
+                <Link href="/signup" className="bg-white text-zinc-900 hover:bg-zinc-100 px-4 py-2 rounded-md inline-block">
                   Get early access
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -201,9 +202,9 @@ export default function Home() {
                 Get early access to beta.
               </p>
               <div className="flex items-center justify-center gap-4 flex-wrap">
-                <a href="#" className="bg-white text-zinc-900 hover:bg-zinc-100 px-8 py-4 rounded-md">
+                <Link href="/signup" className="bg-white text-zinc-900 hover:bg-zinc-100 px-8 py-4 rounded-md">
                   Start for free
-                </a>
+                </Link>
                 {/* <a href="#" className="border-white/20 text-white hover:bg-white/10">
                   Contact sales
                 </a> */}
