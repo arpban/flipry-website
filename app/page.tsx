@@ -1,6 +1,7 @@
 import FlipbookIframe from './components/FlipbookIframe';
 import { Sparkles, Zap, Maximize2, Server, Cloud, Mouse } from 'lucide-react';
 import Link from 'next/link';
+import ScrollDownIcon from './components/ScrollDownIcon';
 
 
 export default function Home() {
@@ -68,10 +69,11 @@ export default function Home() {
             <div className='text-zinc-500 mb-3 text-sm'>Try scrolling through this flipbook</div>
 
             <FlipbookIframe
-              src="/flipbook/demo-ikea"
-              title="IKEA Flipbook"
-              style={{ height: '80vh' }}
+              src="/flipbook/demo-real-estate"
+              title="Flipbook demo"
+              style={{ height: '90vh' }}
             />
+
           </div>
         </div>
 
@@ -169,7 +171,6 @@ export default function Home() {
 
           <div className='container--boxed'>
             <div
-
               className=" mb-12"
             >
               <h2 className="text-4xl md:text-5xl font-bold text-zinc-900 mb-4">
@@ -181,6 +182,13 @@ export default function Home() {
             </div>
 
             <div className='text-zinc-500 mb-3 text-sm'>Try scrolling through this flipbook</div>
+            <FlipbookIframe
+              src="/flipbook/demo-ikea"
+              title="IKEA Flipbook"
+              style={{ height: '80vh' }}
+            />
+
+            <div className='text-zinc-500 mb-3 text-sm mt-20'>Try scrolling through this flipbook</div>
             <FlipbookIframe
               src="/flipbook/demo-tesla"
               title="Tesla Flipbook"

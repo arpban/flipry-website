@@ -207,7 +207,7 @@ export default function Flipbook({ demoPath }: FlipbookProps) {
 
   // Scroll height: each page flip uses ~25vh; we have pageCount pages (incl. covers).
   // Use 50vh per page (like codepen) so there's enough scroll to reach all flips.
-  const scrollHeightVh = pageCount * 50;
+  const scrollHeightVh = pageCount * 45;
 
   if (loading) {
     return (
@@ -299,6 +299,7 @@ export default function Flipbook({ demoPath }: FlipbookProps) {
           // top: '50%',
           // left: '50%',
           // transform: 'translate(-50%, -50%) scale(0.5)',
+          // transform: 'scale(0.8)',
           transformStyle: 'preserve-3d',
           perspective: '1600px',
         }}
@@ -321,7 +322,12 @@ export default function Flipbook({ demoPath }: FlipbookProps) {
                 // transform: 'translate(0, -50%)',
                 height: '100%',
                 width: '100%',
-                zIndex: `calc((${pageCount} - ${actualPageIndex}) * 2)`,
+                // z-index logic:
+                // - Turned pages (left side): higher index = on top (range: 1 to currentPhysicalPage)
+                // - Unturned pages (right side): lower index = on top (range: pageCount+1 to pageCount*2)
+                zIndex: pageIndex < currentPhysicalPage
+                  ? pageIndex + 1
+                  : pageCount + (pageCount - pageIndex),
                 transformOrigin: '0% 50%',
                 transformStyle: 'preserve-3d',
               } as React.CSSProperties}
