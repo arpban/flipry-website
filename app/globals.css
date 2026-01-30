@@ -35,6 +35,18 @@ body {
   }
 }
 
+/* Fade in animation for scroll hint */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 @layer base {
   .container--boxed {
     @apply w-full max-w-[1400px] mx-auto px-6;

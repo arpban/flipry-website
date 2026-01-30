@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ScrollDownIcon from './ScrollDownIcon';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,6 +73,9 @@ export default function Flipbook({ demoPath }: FlipbookProps) {
   const [loading, setLoading] = useState(true);
   const [currentPhysicalPage, setCurrentPhysicalPage] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(false);
+  const scrollHintTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   // Request fullscreen from parent iframe container
   const requestFullscreen = useCallback(() => {
@@ -89,6 +93,78 @@ export default function Flipbook({ demoPath }: FlipbookProps) {
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
   }, []);
+
+  // Show scroll hint and auto-hide after delay
+  const triggerScrollHint = useCallback(() => {
+    setShowScrollHint(true);
+
+    // Clear any existing timeout
+    if (scrollHintTimeoutRef.current) {
+      clearTimeout(scrollHintTimeoutRef.current);
+    }
+
+    // Hide after 2 seconds
+    scrollHintTimeoutRef.current = setTimeout(() => {
+      setShowScrollHint(false);
+    }, 2000);
+  }, []);
+
+  // Detect horizontal scroll/swipe gestures
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      // Detect horizontal scroll attempt (deltaX is significant compared to deltaY)
+      const absX = Math.abs(event.deltaX);
+      const absY = Math.abs(event.deltaY);
+
+      if (absX > 10 && absX > absY * 1.5) {
+        triggerScrollHint();
+      }
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      if (event.touches.length === 1) {
+        touchStartRef.current = {
+          x: event.touches[0].clientX,
+          y: event.touches[0].clientY,
+        };
+      }
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (!touchStartRef.current || event.touches.length !== 1) return;
+
+      const deltaX = event.touches[0].clientX - touchStartRef.current.x;
+      const deltaY = event.touches[0].clientY - touchStartRef.current.y;
+      const absX = Math.abs(deltaX);
+      const absY = Math.abs(deltaY);
+
+      // Detect horizontal swipe (more horizontal than vertical movement)
+      if (absX > 30 && absX > absY * 1.5) {
+        triggerScrollHint();
+        touchStartRef.current = null; // Reset to avoid repeated triggers
+      }
+    };
+
+    const handleTouchEnd = () => {
+      touchStartRef.current = null;
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+
+      if (scrollHintTimeoutRef.current) {
+        clearTimeout(scrollHintTimeoutRef.current);
+      }
+    };
+  }, [triggerScrollHint]);
 
   // Fetch config from JSON file
   useEffect(() => {
@@ -285,6 +361,33 @@ export default function Flipbook({ demoPath }: FlipbookProps) {
           </svg>
         )}
       </button>
+
+      {/* Scroll down hint - shows when horizontal gesture detected */}
+      {showScrollHint && (
+        <div
+          className="fixed z-50 flex flex-col items-center gap-2"
+          style={{
+            // bottom: '24px',
+            top: '45%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            animation: 'fadeIn 0.3s ease-out',
+          }}
+        >
+          <ScrollDownIcon />
+          <span
+            style={{
+              color: '#333',
+              fontSize: '14px',
+              fontWeight: 500,
+              textShadow: '0 1px 2px rgba(255,255,255,0.8)',
+            }}
+          >
+            Scroll down to flip pages
+          </span>
+        </div>
+      )}
+
       <div
         ref={bookRef}
         className="book flex flex-col items-center"
