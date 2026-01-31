@@ -1,8 +1,22 @@
 import FlipbookIframe from './components/FlipbookIframe';
 import { Sparkles, Zap, Maximize2, Server, Cloud, Mouse } from 'lucide-react';
 import Link from 'next/link';
-import ScrollDownIcon from './components/ScrollDownIcon';
+import type { Metadata } from 'next';
 
+export const metadata: Metadata = {
+  title: 'Flipry – Convert PDFs into Interactive Flipbooks Online',
+  description: 'Turn PDFs into beautiful, fast, interactive flipbooks. Open-source, self-hosted or cloud-hosted. No watermark. Developer-friendly.',
+  openGraph: {
+    title: 'Flipry – Convert PDFs into Interactive Flipbooks Online',
+    description: 'Turn PDFs into beautiful, fast, interactive flipbooks. Open-source, self-hosted or cloud-hosted. No watermark. Developer-friendly.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Flipry – Convert PDFs into Interactive Flipbooks Online',
+    description: 'Turn PDFs into beautiful, fast, interactive flipbooks. Open-source, self-hosted or cloud-hosted. No watermark. Developer-friendly.',
+  },
+};
 
 export default function Home() {
   return (
@@ -25,31 +39,32 @@ export default function Home() {
       <main className="w-full">
         <section className='py-20 pb-30'>
           <div className='container--boxed'>
-            <div className='max-w-3xl'>
+            <div className='max-w-4xl'>
 
               {/* <h1 className='font-semibold text-5xl leading-tight tracking-tight'>Smooth, scroll based flipbooks for modern reading</h1> */}
-              <h1 className="text-6xl md:text-7xl font-bold text-zinc-900 mb-6 tracking-tight">
+              {/* <h1 className="text-6xl md:text-7xl font-bold text-zinc-900 mb-6 tracking-tight">
                 PDFs that feel
                 <br />
                 <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
                   natural to read
                 </span>
-              </h1>
+              </h1> */}
+              <h1 className="text-6xl md:text-7xl font-bold text-zinc-900 mb-6 tracking-tight">Flipbooks, redesigned for <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">smooth scrolling</span></h1>
               <p className="text-xl text-zinc-600 max-w-2xl mb-8">
-                Convert your PDFs into beautiful, interactive flipbooks
+                Convert your PDFs into beautiful, interactive flipbooks.
               </p>
-              <div className="flex items-center justify-start gap-8 mb-8 flex-wrap">
+              <div className="flex items-center justify-start gap-7 mb-10 flex-wrap">
                 <div className="flex items-center gap-2 text-zinc-600">
                   <Mouse className="w-5 h-5 text-blue-600" />
-                  <span className="text-base">Smooth scroll-based flipping</span>
+                  <span className="text-lg">Smooth scroll-based flipping</span>
                 </div>
                 <div className="flex items-center gap-2 text-zinc-600">
                   <Zap className="w-5 h-5 text-violet-600" />
-                  <span className="text-base">Lightweight and fast</span>
+                  <span className="text-lg">Lightweight and fast</span>
                 </div>
                 <div className="flex items-center gap-2 text-zinc-600">
                   <Server className="w-5 h-5 text-green-600" />
-                  <span className="text-base">Self-hostable &amp; cloud-enabled</span>
+                  <span className="text-lg">Self-hostable &amp; cloud-enabled</span>
                 </div>
               </div>
 
