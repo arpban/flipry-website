@@ -315,7 +315,7 @@ export default function Flipbook({ demoPath }: FlipbookProps) {
       {/* Fullscreen button - iOS Glass Effect */}
       <button
         onClick={requestFullscreen}
-        className="fixed top-4 right-4 z-50 rounded-full p-3 transition-all duration-200 hover:scale-110 active:scale-95"
+        className="fixed hidden md:block top-4 right-4 z-50 rounded-full p-3 transition-all duration-200 hover:scale-110 active:scale-95"
         aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
         style={{
           cursor: 'pointer',
